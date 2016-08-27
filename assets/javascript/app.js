@@ -65,7 +65,6 @@ $(function() {
     },
 
     getQuestion: function() {
-      console.log($counter);
       this.questionContainer.find('.Question__text').html(Questions[$counter].question_text);
       this.questionContainer.find('.Question__answers form')
         .append(this.radioTemplate(Questions[$counter].answer_one))
@@ -83,23 +82,43 @@ $(function() {
       $('input[type="radio"]').on('change', function() {
 
         if(Questions[$counter].correct_answer === this.value) {
-          console.log('you guessed right');
+          console.log('you guessed right and count is ' + $counter);
         } else {
-          console.log('you guessed wrong');
+          console.log('you guessed wrong and count is ' + $counter  );
         }
 
-        $question.addClass('animated fadeOut');
-        setTimeout(function() {
-          $question.remove();
-        }, 2000);
+
+
+        // $question.addClass('animated fadeOut');
+        // setTimeout(function() {
+        //   $question.remove();
+        // }, 2000);
 
         // increment counter
         $counter++;
+
+        // empty form answers
+        game.questionContainer.find('.Question__answers form').empty();
+
+        // check if last, or get next question
+        game.isLastQuestion();
+
 
       });
 
 
     },
+
+
+
+    isLastQuestion: function() {
+      if ($counter > $totalQuestions) {
+        console.log('game over');
+      } else {
+        game.getQuestion();
+      }
+
+    }
 
 
 
