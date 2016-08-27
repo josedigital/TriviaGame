@@ -3,7 +3,7 @@ $(function() {
   // Questions object
   var Questions = {
     1: {
-      question_text: 'Is this question one?',
+      question_text: 'What is the capital of Zaiire?',
       answer_one: 'Answer One',
       answer_two: 'Answer Two',
       answer_three: 'Answer Three',
@@ -25,7 +25,12 @@ $(function() {
   var $question = $('.Question'),
       $radio = $('.radio'),
       $counter = 1,
-      $totalQuestions = 0;
+      $totalQuestions = 0,
+      $rightAnswer = 0,
+      $wrongAnswer = 0,
+      $unAnswered = 0,
+      $startIntID,
+      $allottedTime = 15;
 
 
   // set total # of questions in var: $totalQuestions
@@ -44,6 +49,7 @@ $(function() {
     // set vars
     questionContainer: $('.Question'),
     radio: $('input[type="radio"]'),
+    timer: $('.timer'),
 
 
     
@@ -72,27 +78,28 @@ $(function() {
         .append(this.radioTemplate(Questions[$counter].answer_three))
         .append(this.radioTemplate(Questions[$counter].answer_four));
 
+      // start timer
+      this.startTimer();
+
       // check question
       this.checkQuestion();
-
     },
 
 
     checkQuestion: function() {
+      
       $('input[type="radio"]').on('change', function() {
 
+        // clear interval
+        clearInterval($startIntID);
+
         if(Questions[$counter].correct_answer === this.value) {
-          console.log('you guessed right and count is ' + $counter);
+          game.isRight();
         } else {
-          console.log('you guessed wrong and count is ' + $counter  );
+          game.isWrong();
         }
 
-
-
         // $question.addClass('animated fadeOut');
-        // setTimeout(function() {
-        //   $question.remove();
-        // }, 2000);
 
         // increment counter
         $counter++;
@@ -109,14 +116,67 @@ $(function() {
 
     },
 
+    isRight: function() {
+      console.log('you guessed right and count is ' + $counter);
+      $rightAnswer++;
+    },
+
+    isWrong: function() {
+      console.log('you guessed wrong and count is ' + $counter  );
+      $wrongAnswer++;
+    },
+
+    isUnanswered: function() {
+      // clear interval
+      clearInterval($startIntID);
+
+      // increment unanswered questions
+      $unAnswered++;
+
+      // increment counter
+      $counter++;
+      // check if last, or get next question
+      game.isLastQuestion();
+    },
+
 
 
     isLastQuestion: function() {
       if ($counter > $totalQuestions) {
-        console.log('game over');
+        this.gameOver();
       } else {
-        game.getQuestion();
+        this.getQuestion();
       }
+
+    },
+
+
+    gameOver: function() {
+      console.log('game over');
+      console.log('you got ' + $rightAnswer + ' answers correct.');
+      console.log('you got ' + $wrongAnswer + ' answers incorrect.');
+      console.log('you left ' + $unAnswered + ' answers blank.');
+    },
+
+
+    startTimer: function() {
+      // put 15 up on the board
+      game.timer.html($allottedTime);
+      
+      // start timerCount at 0
+      var timerCount = 0;
+
+      // start timer
+      $startIntID = setInterval(function() {
+        
+        timerCount++;
+        game.timer.html($allottedTime - timerCount);
+
+        if(timerCount === $allottedTime) {
+          game.isUnanswered();
+        }
+        
+      }, 1000);
 
     }
 
