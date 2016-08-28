@@ -22,16 +22,14 @@ $(function() {
 
 
   // set global vars
-  var $question = $('.Question'),
-      $radio = $('.radio'),
-      $counter = 1,
+  var $counter = 1,
       $totalQuestions = 0,
       $rightAnswer = 0,
       $wrongAnswer = 0,
       $unAnswered = 0,
       $startIntID,
       $transitionDelay = 3,
-      $allottedTime = 15;
+      $allottedTime = 5;
 
 
   // set total # of questions in var: $totalQuestions
@@ -49,13 +47,18 @@ $(function() {
 
     // set vars
     questionContainer: $('.Question'),
+    messageContainer: $('.Question__message'),
     radio: $('input[type="radio"]'),
     timer: $('.timer'),
+    restartButton: $('.Restart__button'),
 
 
     
     // init
     init: function() {
+
+      // hide button
+      this.restartButton.removeClass('animated fadeInUp').addClass('hidden');
 
       // get a question
       this.getQuestion();
@@ -72,6 +75,7 @@ $(function() {
     },
 
     getQuestion: function() {
+      // add question to DOM
       this.questionContainer.find('.Question__text').html(Questions[$counter].question_text);
       this.questionContainer.find('.Question__answers form')
         .append(this.radioTemplate(Questions[$counter].answer_one))
@@ -80,7 +84,7 @@ $(function() {
         .append(this.radioTemplate(Questions[$counter].answer_four));
 
       // empty message
-      this.questionContainer.find('.Question__message').empty();
+      this.messageContainer.empty();
 
       // start timer
       this.startTimer();
@@ -97,19 +101,15 @@ $(function() {
         // clear interval
         clearInterval($startIntID);
 
+        // check if question is right or wrong
         if(Questions[$counter].correct_answer === this.value) {
           game.isRight();
         } else {
           game.isWrong();
         }
 
-        // $question.addClass('animated fadeOut');
-
-        // empty form answers
+        // empty form answers after answering
         game.questionContainer.find('.Question__answers form').empty();
-
-        // check if last, or get next question
-        // game.isLastQuestion();
 
         // increment counter
         $counter++;
@@ -121,16 +121,20 @@ $(function() {
     },
 
     isRight: function() {
-      console.log('you guessed right and count is ' + $counter);
+      // add a message
       $message = "<p>congrats! you got it right.</p>";
+      // add one to rightAnswer
       $rightAnswer++;
+      // invoke transition
       this.transition($message);
     },
 
     isWrong: function() {
-      console.log('you guessed wrong and count is ' + $counter  );
+      // add a message
       $message = "<p>oooo, sorry. that was not the right answer.</p>";
+      // add one to wrongAnswer
       $wrongAnswer++;
+      // invoke transition
       this.transition($message);
     },
 
@@ -138,8 +142,14 @@ $(function() {
       // clear interval
       clearInterval($startIntID);
 
+      // add a message
+      $message = "<p>sorry, time's up.</p>";
+
       // increment unanswered questions
       $unAnswered++;
+
+      // invoke transition
+      this.transition($message);
 
       // increment counter
       $counter++;
@@ -147,12 +157,12 @@ $(function() {
       // empty form answers
       game.questionContainer.find('.Question__answers form').empty();
 
-      // check if last, or get next question
-      game.isLastQuestion();
+      // // check if last, or get next question
+      // game.isLastQuestion();
     },
 
     transition: function($message) {
-      this.questionContainer.find('.Question__message').html($message + Questions[$counter].correct_answer);
+      this.messageContainer.html($message + Questions[$counter].correct_answer);
       setTimeout(function() {
         game.isLastQuestion();
       }, 1000*$transitionDelay);
@@ -174,10 +184,20 @@ $(function() {
 
 
     gameOver: function() {
-      this.questionContainer.find('.Question__message').html('game over');
-      this.questionContainer.find('.Question__message').append('you got ' + $rightAnswer + ' answers correct.');
-      this.questionContainer.find('.Question__message').append('you got ' + $wrongAnswer + ' answers incorrect.');
-      this.questionContainer.find('.Question__message').append('you left ' + $unAnswered + ' answers blank.');
+      this.messageContainer.append('<p>game over<br>');
+      this.messageContainer.append('you got ' + $rightAnswer + ' answers correct.<br>');
+      this.messageContainer.append('you got ' + $wrongAnswer + ' answers incorrect.<br>');
+      this.messageContainer.append('you left ' + $unAnswered + ' answers blank.</p>');
+      this.restartButton.removeClass('hidden').addClass('animated fadeInUp');
+      this.restart();
+    },
+
+    restart: function() {
+      this.restartButton.on('click', function() {
+        console.log('clicked');
+        $counter = 1;
+        game.init();
+      });
     },
 
 

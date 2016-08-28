@@ -15,14 +15,9 @@
 
 </head>
 <body>
-  <div class="wrapper">
-
     <header class="grid ta-center">
       <h1>Trivia Game</h1>
     </header>
-  
-  </div><!-- /.wrapper -->
-
 
 
   <div class="wrapper-small">
@@ -30,6 +25,10 @@
     <div class="grid">
       
       <section class="eight columns ta-center Question">
+        <div class="Question__corner Question__corner--top-left"></div>
+        <div class="Question__corner Question__corner--top-right"></div>
+        <div class="Question__corner Question__corner--bottom-right"></div>
+        <div class="Question__corner Question__corner--bottom-left"></div>
         <div class="Question__timer">Time remaining: <span class="timer">15</span></div>
         <h3 class="Question__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi fugit repellat unde ea nihil praesentium velit sit adipisci dicta libero?</h3>
         <div class="Question__answers">
@@ -44,7 +43,10 @@
             </label> -->
           </form>
         </div>
-        <div class="Question__message"></div>
+        <div class="Question__message">
+         
+        </div>
+         <p><button class="Restart__button hidden">restart</button></p>
       </section>
       
     </div>
