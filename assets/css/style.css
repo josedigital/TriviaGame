@@ -78,7 +78,15 @@ h1, h2, h3, h4 {
   border-bottom: none;
   bottom: -3px;
   left: -3px;
-}*/
+}
+
+------------------ html :
+<div class="Question__corner Question__corner--top-left"></div>
+<div class="Question__corner Question__corner--top-right"></div>
+<div class="Question__corner Question__corner--bottom-right"></div>
+<div class="Question__corner Question__corner--bottom-left"></div>
+
+*/
 
 .radio__label {
   color: #fff;
