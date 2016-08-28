@@ -75,3 +75,6 @@ then you invoke getQuestion()
 
             - endGame()
             - getQuestion()
+
+
+if it's right, you transition - show right anser, sorry if wrong, congrats if right - then check if last question

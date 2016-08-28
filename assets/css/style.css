@@ -1,6 +1,17 @@
 /*font-family: 'Lora', serif;
 font-family: 'Crimson Text', serif;*/
 
+body {
+  background: #232a2a;
+  color: #cacdac;
+  font-family: 'Lora', serif;
+}
+
+
 .Question__text {
   font-family: 'Crimson Text', serif;
+}
+
+.radio__label {
+  color: #cacdac;
 }

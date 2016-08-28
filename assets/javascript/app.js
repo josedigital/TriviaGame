@@ -101,14 +101,14 @@ $(function() {
 
         // $question.addClass('animated fadeOut');
 
-        // increment counter
-        $counter++;
-
         // empty form answers
         game.questionContainer.find('.Question__answers form').empty();
 
         // check if last, or get next question
-        game.isLastQuestion();
+        // game.isLastQuestion();
+
+        // increment counter
+        $counter++;
 
 
       });
@@ -119,6 +119,7 @@ $(function() {
     isRight: function() {
       console.log('you guessed right and count is ' + $counter);
       $rightAnswer++;
+      this.transition();
     },
 
     isWrong: function() {
@@ -135,9 +136,23 @@ $(function() {
 
       // increment counter
       $counter++;
+
+      // empty form answers
+      game.questionContainer.find('.Question__answers form').empty();
+
       // check if last, or get next question
       game.isLastQuestion();
     },
+
+    transition: function() {
+      this.questionContainer.find('.Correct-answer').html(Questions[$counter].correct_answer);
+      setTimeout(function() {
+        game.isLastQuestion();
+      }, 1000*3);
+    },
+
+
+
 
 
 
