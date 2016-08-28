@@ -30,6 +30,7 @@ $(function() {
       $wrongAnswer = 0,
       $unAnswered = 0,
       $startIntID,
+      $transitionDelay = 3,
       $allottedTime = 15;
 
 
@@ -154,7 +155,7 @@ $(function() {
       this.questionContainer.find('.Question__message').html($message + Questions[$counter].correct_answer);
       setTimeout(function() {
         game.isLastQuestion();
-      }, 1000*3);
+      }, 1000*$transitionDelay);
     },
 
 
@@ -173,10 +174,10 @@ $(function() {
 
 
     gameOver: function() {
-      console.log('game over');
-      console.log('you got ' + $rightAnswer + ' answers correct.');
-      console.log('you got ' + $wrongAnswer + ' answers incorrect.');
-      console.log('you left ' + $unAnswered + ' answers blank.');
+      this.questionContainer.find('.Question__message').html('game over');
+      this.questionContainer.find('.Question__message').append('you got ' + $rightAnswer + ' answers correct.');
+      this.questionContainer.find('.Question__message').append('you got ' + $wrongAnswer + ' answers incorrect.');
+      this.questionContainer.find('.Question__message').append('you left ' + $unAnswered + ' answers blank.');
     },
 
 
