@@ -78,6 +78,9 @@ $(function() {
         .append(this.radioTemplate(Questions[$counter].answer_three))
         .append(this.radioTemplate(Questions[$counter].answer_four));
 
+      // empty message
+      this.questionContainer.find('.Question__message').empty();
+
       // start timer
       this.startTimer();
 
@@ -118,13 +121,16 @@ $(function() {
 
     isRight: function() {
       console.log('you guessed right and count is ' + $counter);
+      $message = "<p>congrats! you got it right.</p>";
       $rightAnswer++;
-      this.transition();
+      this.transition($message);
     },
 
     isWrong: function() {
       console.log('you guessed wrong and count is ' + $counter  );
+      $message = "<p>oooo, sorry. that was not the right answer.</p>";
       $wrongAnswer++;
+      this.transition($message);
     },
 
     isUnanswered: function() {
@@ -144,8 +150,8 @@ $(function() {
       game.isLastQuestion();
     },
 
-    transition: function() {
-      this.questionContainer.find('.Correct-answer').html(Questions[$counter].correct_answer);
+    transition: function($message) {
+      this.questionContainer.find('.Question__message').html($message + Questions[$counter].correct_answer);
       setTimeout(function() {
         game.isLastQuestion();
       }, 1000*3);
