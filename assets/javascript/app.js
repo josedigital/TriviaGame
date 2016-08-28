@@ -4,7 +4,7 @@ $(function() {
   // questions taken from: http://123facts.com/play-quiz/The-History-of-Punk-Rock-731.html
   var Questions = {
     1: {
-      question_text: 'What late 70\'s NYC punk band was Buster Poindexter a member of?',
+      question_text: 'Buster Poindexter was a member of what late 70\'s NYC punk band?',
       answer_one: 'The New York Dolls',
       answer_two: 'The Damned ',
       answer_three: 'The Ramones ',
@@ -13,7 +13,7 @@ $(function() {
       explanation: 'David Johansen is Buster\'s real name and he was one of the original dress-wearing punks in the New York Dolls.'
     },
     2: {
-      question_text: 'Which of these are bands that Glen Danzig has been a member of?',
+      question_text: 'Glen Danzig has been a member of which set of bands?',
       answer_one: 'Danzig, The Misfits and Black Flag',
       answer_two: 'Danzig, The Sex Pistols and Devo',
       answer_three: 'Danzig, The Misfits and Samhain',
@@ -67,7 +67,7 @@ $(function() {
       explanation: 'While Brian Baker was also in Minor Threat, he actually went on to form Dagnasty. The Fugazi name alludes to a Vietnam-era GI slang backronym for a particularly bad combat situation.'
     },
     8: {
-      question_text: 'What band was Eric Reed Boucher, better known as Jello Biaffara, the lead singer of?',
+      question_text: 'Eric Reed Boucher, better known as Jello Biaffara, was the lead singer of what band?',
       answer_one: 'The Sex Pistols',
       answer_two: 'Dead Kennedys',
       answer_three: 'The Jam',
@@ -103,8 +103,9 @@ $(function() {
       $wrongAnswer = 0,
       $unAnswered = 0,
       $startIntID,
-      $transitionDelay = 3,
-      $allottedTime = 5;
+      $transitionDelay = 5, // in seconds
+      $allottedTime = 20,   // in seconds
+      $startButton;
 
 
   // set total # of questions in var: $totalQuestions
@@ -141,6 +142,14 @@ $(function() {
 
     },
 
+    startGame: function() {
+      $startButton = $('<button class="Start__button">Start!</button>');
+      this.questionContainer.prepend($startButton);
+      $startButton.on('click', function() {
+        game.init();
+      });
+    },
+
     // radio button template
     radioTemplate: function(answer) {
       return  '<label class="radio">' +
@@ -150,6 +159,8 @@ $(function() {
     },
 
     getQuestion: function() {
+      // remove start button
+      $startButton.remove();
       // add question to DOM
       this.questionContainer.find('.Question__text').html(Questions[$counter].question_text);
       this.questionContainer.find('.Question__answers form')
@@ -313,7 +324,7 @@ $(function() {
 
 
 
-  game.init();
+  game.startGame();
 
 
 

@@ -8,7 +8,7 @@ body {
   background-attachment: fixed;
   color: #fff;
   font-family: 'Roboto Slab', serif;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+  text-shadow: 1px 1px 10px rgba(0,0,0,0.75);
   transition: background .3s;
 }
 
@@ -20,13 +20,15 @@ h1, h2, h3, h4 {
 
 .Tagline {
   /*background: rgba(0,0,0,0.6);*/
-  background: #fff;
   color: #222;
   font-size: 24px;
   margin-top: 3em;
   opacity: 0.6;
-  padding: 10px;
   transform: rotate(23deg);
+}
+.Tagline span {
+  background: #fff;
+  padding: 10px;
 }
 
 
