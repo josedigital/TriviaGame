@@ -3,19 +3,42 @@ font-family: 'Crimson Text', serif;*/
 
 body {
   background: #232a2a;
-  color: #cacdac;
-  font-family: 'Lora', serif;
+  background: url('../images/distressed-bg.jpg') 0 0 no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
+  font-family: 'Roboto Slab', serif;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
   transition: background .3s;
 }
 
+
+h1, h2, h3, h4 {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+}
+
+.Tagline {
+  /*background: rgba(0,0,0,0.6);*/
+  background: #fff;
+  color: #222;
+  font-size: 24px;
+  margin-top: 3em;
+  opacity: 0.6;
+  padding: 10px;
+  transform: rotate(23deg);
+}
+
+
 .Question {
-  border: 3px solid #cacdac;
+  /*border: 3px solid #cacdac;*/
   padding: 30px 10px;
   position: relative;
+  transform: rotate(-2deg);
 }
 
 /* corners */
-.Question__corner {
+/*.Question__corner {
   background: #232a2a;
   border: 3px solid;
   height: 50px;
@@ -53,14 +76,10 @@ body {
   border-bottom: none;
   bottom: -3px;
   left: -3px;
-}
-
-.Question__text {
-  font-family: 'Crimson Text', serif;
-}
+}*/
 
 .radio__label {
-  color: #cacdac;
+  color: #fff;
 }
 
 .hidden {
