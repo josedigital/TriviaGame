@@ -125,6 +125,7 @@ $(function() {
     questionContainer: $('.Question'),
     messageContainer: $('.Question__message'),
     radio: $('input[type="radio"]'),
+    timerContainer: $('.Question__timer'),
     timer: $('.timer'),
     restartButton: $('.Restart__button'),
 
@@ -135,6 +136,9 @@ $(function() {
 
       // hide button
       this.restartButton.removeClass('animated fadeInUp').addClass('hidden');
+
+      // show the timer
+      this.timerContainer.removeClass('hidden');
 
       // get a question
       this.getQuestion();
@@ -206,6 +210,8 @@ $(function() {
 
     },
 
+
+
     isRight: function() {
       // add a message
       $message = '<p>congrats! you got it right.</p> <p>' + Questions[$counter].explanation + '</p>';
@@ -244,19 +250,17 @@ $(function() {
       // empty form answers
       game.questionContainer.find('.Question__answers form').empty();
 
-      // // check if last, or get next question
-      // game.isLastQuestion();
+
     },
+
+
 
     transition: function($message) {
       this.messageContainer.html($message + Questions[$counter].correct_answer);
       setTimeout(function() {
         game.isLastQuestion();
-      }, 1000*$transitionDelay);
+      }, 1000 * $transitionDelay);
     },
-
-
-
 
 
 
@@ -278,6 +282,7 @@ $(function() {
       this.restartButton.removeClass('hidden').addClass('animated fadeInUp');
       this.restart();
     },
+
 
     restart: function() {
       this.restartButton.on('click', function() {
