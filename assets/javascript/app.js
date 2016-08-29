@@ -125,6 +125,7 @@ $(function() {
     questionContainer: $('.Question'),
     questionText: $('.Question__text'),
     messageContainer: $('.Question__message'),
+    quesitonForm: $('.Question__answers form'),
     radio: $('input[type="radio"]'),
     timerContainer: $('.Question__timer'),
     timer: $('.timer'),
@@ -197,7 +198,7 @@ $(function() {
 
       // add question to DOM
       this.questionText.html(Questions[$counter].question_text);
-      this.questionContainer.find('.Question__answers form')
+      this.quesitonForm
         .append(this.radioTemplate(Questions[$counter].answer_one))
         .append(this.radioTemplate(Questions[$counter].answer_two))
         .append(this.radioTemplate(Questions[$counter].answer_three))
