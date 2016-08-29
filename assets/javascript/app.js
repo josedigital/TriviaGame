@@ -123,6 +123,7 @@ $(function() {
 
     // set vars
     questionContainer: $('.Question'),
+    questionText: $('.Question__text'),
     messageContainer: $('.Question__message'),
     radio: $('input[type="radio"]'),
     timerContainer: $('.Question__timer'),
@@ -147,12 +148,26 @@ $(function() {
     },
 
     startGame: function() {
-      $startButton = $('<button class="Start__button">Start!</button>');
+      // create start button
+      $startButton = $('<button class="Start__button animated fadeInDown">Start!</button>');
+      // append it to questionContainer
       this.questionContainer.prepend($startButton);
+
       $startButton.on('click', function() {
-        game.init();
+        // fade out button
+        $startButton.removeClass('fadeInDown').addClass('fadeOutUp');
+        // fade out quote
+        game.questionText.addClass('animated fadeOutDown');
+
+        // wait one second then start the game
+        setTimeout(function() {
+          game.init();
+        }, 1000);
+        
       });
     },
+
+
 
     // radio button template
     radioTemplate: function(answer) {
@@ -162,11 +177,16 @@ $(function() {
               '</label>';
     },
 
+
+
     getQuestion: function() {
       // remove start button
       $startButton.remove();
+      // fade h3 back in
+      game.questionText.removeClass('fadeOutDown fadeOutLeft').addClass('fadeInRight');
+
       // add question to DOM
-      this.questionContainer.find('.Question__text').html(Questions[$counter].question_text);
+      this.questionText.html(Questions[$counter].question_text);
       this.questionContainer.find('.Question__answers form')
         .append(this.radioTemplate(Questions[$counter].answer_one))
         .append(this.radioTemplate(Questions[$counter].answer_two))
@@ -214,7 +234,9 @@ $(function() {
 
     isRight: function() {
       // add a message
-      $message = '<p>congrats! you got it right.</p> <p>' + Questions[$counter].explanation + '</p>';
+      $message = '<p><span class="Highlight--pink">congrats! you got it right.</span></p>' +
+                 '<p><span class="Highlight">The correct answer is ' + Questions[$counter].correct_answer + '</span></p>' +
+                 '<p><span class="Highlight--dark">' + Questions[$counter].explanation + '</span></p>';
 
       // add one to rightAnswer
       $rightAnswer++;
@@ -224,7 +246,9 @@ $(function() {
 
     isWrong: function() {
       // add a message
-      $message = '<p>oooo, sorry. that was not the right answer.</p> <p>' + Questions[$counter].explanation + '</p>';
+      $message = '<p><span class="Highlight--pink">oooo, sorry. that was not the right answer.</span></p>' +
+                 '<p><span class="Highlight">The correct answer is ' + Questions[$counter].correct_answer + '</span></p>' +
+                 '<p><span class="Highlight--dark">' + Questions[$counter].explanation + '</span></p>';
       // add one to wrongAnswer
       $wrongAnswer++;
       // invoke transition
@@ -236,7 +260,9 @@ $(function() {
       clearInterval($startIntID);
 
       // add a message
-      $message = '<p>sorry, time\'s up.</p> <p>' + Questions[$counter].explanation + '</p>';
+      $message = '<p><span class="Highlight--pink">sorry, time\'s up.</span></p>' + 
+                 '<p><span class="Highlight">The correct answer is ' + Questions[$counter].correct_answer + '</span></p>' +
+                '<p><span class="Highlight--dark">' + Questions[$counter].explanation + '</span></p>';
 
       // increment unanswered questions
       $unAnswered++;
@@ -256,9 +282,14 @@ $(function() {
 
 
     transition: function($message) {
-      this.messageContainer.html($message + Questions[$counter].correct_answer);
+      // fade question out to left
+      game.questionText.removeClass('fadeInRight').addClass('fadeOutLeft');
+      // add and fade in message
+      this.messageContainer.html($message).addClass('show fadeInUp');
       setTimeout(function() {
         game.isLastQuestion();
+        // remove class so that it can fade in again
+        game.messageContainer.removeClass('show fadeInUp');
       }, 1000 * $transitionDelay);
     },
 

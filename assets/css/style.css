@@ -39,7 +39,46 @@ h1, h2, h3, h4 {
   transform: rotate(-2deg);
 }
 
-/* corners */
+.Question__message {
+  opacity: 0;
+  position: absolute;
+  text-shadow: none;
+  transition: opacity 0.75s;
+  top: 150px;
+}
+.Highlight {
+  background: rgba(199,230,2,0.75);
+  color: #222;
+  padding: 5px;
+}
+.Highlight--dark {
+  background: rgba(0,0,0,0.75);
+}
+.Highlight--pink {
+  background: rgba(232,63,184,0.75);
+}
+
+.Question__message.show {
+  opacity: 1;
+}
+
+
+
+.radio__label {
+  color: #fff;
+  font-size: 18px;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
+
+
+
+
+
+/* corners -- from old design */
 /*.Question__corner {
   background: #232a2a;
   border: 3px solid;
@@ -88,11 +127,3 @@ h1, h2, h3, h4 {
 
 */
 
-.radio__label {
-  color: #fff;
-}
-
-.hidden {
-  display: none;
-  opacity: 0;
-}
