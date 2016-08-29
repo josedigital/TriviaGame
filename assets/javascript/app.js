@@ -142,6 +142,16 @@ $(function() {
       // show the timer
       this.timerContainer.removeClass('hidden');
 
+      // clear interval
+      clearInterval($startIntID);
+      
+      $rightAnswer = 0;
+      $wrongAnswer = 0;
+      $unAnswered = 0;
+
+      // empty form answers after answering
+      game.quesitonForm.empty();
+
       // get a question
       this.getQuestion();
 
@@ -230,7 +240,7 @@ $(function() {
         }
 
         // empty form answers after answering
-        game.questionContainer.find('.Question__answers form').empty();
+        game.quesitonForm.empty();
 
         // increment counter
         $counter++;
@@ -285,7 +295,7 @@ $(function() {
       $counter++;
 
       // empty form answers
-      game.questionContainer.find('.Question__answers form').empty();
+      game.quesitonForm.empty();
 
 
     },
@@ -331,7 +341,7 @@ $(function() {
 
     restart: function() {
       this.restartButton.on('click', function() {
-        console.log('clicked');
+        // reset counter
         $counter = 1;
         game.init();
       });
