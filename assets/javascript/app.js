@@ -143,11 +143,21 @@ $(function() {
 
       // get a question
       this.getQuestion();
+
+      // start sound
+      document.querySelector('.Game__sound--end').play();
+
+      // remove warning
+      $('.Warning').addClass('hinge');
       
+      // display sound controls
+      $('.Game__sound--button').addClass('animated fadeInUp');
 
     },
 
     startGame: function() {
+      // add sound warning
+      this.questionContainer.prepend('<p class="Warning animated"><span class="Highlight">Oi! Sound will play when you start.</span></p>');
       // create start button
       $startButton = $('<button class="Start__button animated fadeInDown">Start!</button>');
       // append it to questionContainer
@@ -313,6 +323,7 @@ $(function() {
                                    '<span class="Highlight">you left ' + $unAnswered + ' answers blank.</span></p>');
 
       this.restartButton.removeClass('hidden').addClass('animated fadeInUp');
+
       this.restart();
     },
 

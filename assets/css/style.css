@@ -81,6 +81,39 @@ h1, h2, h3, h4 {
 
 
 
+.Game__sound--controls {
+  left: 25px;
+  position: fixed;
+  top: 25px;
+}
+
+.Game__sound--controls button {
+  border-radius: 50%;
+  font-size: 14px;
+  height: 60px;
+  opacity: 0;
+  width: 60px;
+}
+
+.Game__sound--play {
+  animation-delay: 1s;
+}
+.Game__sound--pause {
+  animation-delay: 2s;
+}
+.Game__sound--vup {
+  animation-delay: 3s;
+}
+.Game__sound--vdown {
+  animation-delay: 4s;
+}
+
+.Warning {
+  margin: 0 auto;
+  text-align: center;
+  width: 50%;
+}
+
 
 .radio__label {
   color: #fff;

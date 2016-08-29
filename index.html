@@ -16,10 +16,21 @@
 </head>
 <body>
 
+<div class="Game__sound--controls grid animated">
+  <button class="Game__sound--button Game__sound--play" onclick="document.querySelector('.Game__sound--end').play()">Play</button>
+  <button class="Game__sound--button Game__sound--pause" onclick="document.querySelector('.Game__sound--end').pause()">Pause</button>
+  <button class="Game__sound--button Game__sound--vup" onclick="document.querySelector('.Game__sound--end').volume+=0.1">+</button>
+  <button class="Game__sound--button Game__sound--vdown" onclick="document.querySelector('.Game__sound--end').volume-=0.1">-</button>
+  <audio src="assets/images/queen.mp3" class="Game__sound--end"></audio>
+</div>
+
+
+
   <div class="wrapper">
     <header class="grid ta-center">
       
       <h2 class="Tagline"><span>a trivia game written in javascript and jquery</span></h2>
+      
     </header>
 
 
@@ -50,6 +61,7 @@
          
         </div>
          <p><button class="Restart__button hidden">Play again?</button></p>
+         
       </section>
       
     </div>
