@@ -103,7 +103,7 @@ $(function() {
       $wrongAnswer = 0,
       $unAnswered = 0,
       $startIntID,
-      $transitionDelay = 1, // in seconds
+      $transitionDelay = 5, // in seconds
       $allottedTime = 20,   // in seconds
       $startButton;
 
