@@ -103,7 +103,7 @@ $(function() {
       $wrongAnswer = 0,
       $unAnswered = 0,
       $startIntID,
-      $transitionDelay = 5, // in seconds
+      $transitionDelay = 1, // in seconds
       $allottedTime = 20,   // in seconds
       $startButton;
 
@@ -306,10 +306,12 @@ $(function() {
 
 
     gameOver: function() {
-      this.messageContainer.append('<p>game over<br>');
-      this.messageContainer.append('you got ' + $rightAnswer + ' answers correct.<br>');
-      this.messageContainer.append('you got ' + $wrongAnswer + ' answers incorrect.<br>');
-      this.messageContainer.append('you left ' + $unAnswered + ' answers blank.</p>');
+      this.messageContainer.removeClass('Question__message').addClass('fadeInUp');
+      this.messageContainer.append('<p class="Game__stats"><span class="Highlight--pink">game over</span><br>' + 
+                                   '<span class="Highlight">you got ' + $rightAnswer + ' answers correct.</span><br>' +
+                                   '<span class="Highlight">you got ' + $wrongAnswer + ' answers incorrect.</span><br>' + 
+                                   '<span class="Highlight">you left ' + $unAnswered + ' answers blank.</span></p>');
+
       this.restartButton.removeClass('hidden').addClass('animated fadeInUp');
       this.restart();
     },
