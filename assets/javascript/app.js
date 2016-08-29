@@ -371,9 +371,9 @@ $(function() {
 
 
 
-
-
-  game.startGame();
+  $(window).on('load', function() {
+    game.startGame();
+  });
 
 
 
