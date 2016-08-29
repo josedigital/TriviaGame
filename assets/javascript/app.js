@@ -339,7 +339,7 @@ $(function() {
 
 
     startTimer: function() {
-      // put 15 up on the board
+      // put allotedTime up on the board
       game.timer.html($allottedTime);
       
       // start timerCount at 0
