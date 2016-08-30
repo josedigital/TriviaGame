@@ -189,19 +189,20 @@
       this.timerCount++;
       this.$questionContainer.find('.timer').html(this.allottedTime - this.timerCount);
       if(this.timerCount === this.allottedTime) {
-        clearInterval(this.startIntID);
-        console.log(this.unAnswered);
         this.unAnswered++;
-        console.log(this.unAnswered);
       }
+      console.log(this.timerCount);
     },
     startTimer: function() {
+      this.timerCount = 0;
       this.startIntID = setInterval(this.timer.bind(this), 1000);
       console.log(this.timerCount);
     },
+    stopTimer: function() {
+      clearInterval(this.startIntID);
+    },
     checkQuestion: function() {
-        clearInterval(game.startIntID);
-
+        game.stopTimer();
         if(game.questions[game.counter].correct_answer === this.value) {
           game.isRight();
         } else {
@@ -240,12 +241,15 @@
 
 
 
-    transition: function() {
-      // console.log(this.$questionText);
-      game.$questionContainer.find('Question__text').removeClass('fadeInRight').addClass('fadeOutLeft');
+    transition: function(message) {
+      this.$questionContainer.find('.Question__message').html(message);
+      this.$questionContainer.find('.Question__message').addClass('shoe fadeInUp');
+      this.$questionContainer.find('.Question__text').removeClass('fadeInRight').addClass('fadeOutLeft');
+      this.$questionContainer.find('.Question__answers').removeClass('fadeInLeft').addClass('animated fadeOutRight');
       this.counter++;
       this.$messageContainer.html(this.message).addClass('show fadeInUp');
       setTimeout(function() {
+        game.startTimer();
         game.render();
       }, 1000 * this.transitionDelay);
 
