@@ -102,6 +102,15 @@
   var game = {
     questions: Questions,
     counter: 0,
+    allottedTime: 15,
+    timerCount: 0,
+    startIntID: '',
+    rightAnswer: 0,
+    wrongAnswer: 0,
+    unAnswered: 0,
+    message: '',
+    transitionDelay: 3,
+
 
     template: function(question) {
       return '<div class="Question__timer">Time remaining: <span class="timer">15</span></div>' +
@@ -153,13 +162,16 @@
     },
     bindEvents: function() {
       this.$startButton.on('click', this.preStart.bind(this));
+      this.$questionContainer.on('change', 'input[type="radio"]', this.checkQuestion);
     },
     render: function() {
 
+      // render question
       if( this.counter > 0 )
         this.$questionContainer.html(this.template(this.questions[this.counter]));
       if( this.counter === 1)
         this.$questionContainer.prepend(this.$soundWarning);
+      
     },
     preStart: function() {
       this.$startButton.removeClass('fadeInDown').addClass('fadeOutUp');
@@ -170,7 +182,74 @@
       this.$soundWarning.addClass('hinge');
       document.querySelector('.Game__sound').play();
       this.counter = 1;
+      this.startTimer();
       this.render();
+    },
+    timer: function() {
+      this.timerCount++;
+      this.$questionContainer.find('.timer').html(this.allottedTime - this.timerCount);
+      if(this.timerCount === this.allottedTime) {
+        clearInterval(this.startIntID);
+        console.log(this.unAnswered);
+        this.unAnswered++;
+        console.log(this.unAnswered);
+      }
+    },
+    startTimer: function() {
+      this.startIntID = setInterval(this.timer.bind(this), 1000);
+      console.log(this.timerCount);
+    },
+    checkQuestion: function() {
+        clearInterval(game.startIntID);
+
+        if(game.questions[game.counter].correct_answer === this.value) {
+          game.isRight();
+        } else {
+          game.isWrong();
+        }
+
+        // empty form answers after answering
+        // game.questionForm.empty();
+
+        // increment counter
+        game.counter++;    
+    },
+    isRight: function() {
+      // add a message
+      this.message = '<p><span class="Highlight--pink">congrats! you got it right.</span></p>' +
+                 '<p><span class="Highlight">The correct answer is ' + this.questions[this.counter].correct_answer + '</span></p>' +
+                 '<p><span class="Highlight--dark">' + this.questions[this.counter].explanation + '</span></p>';
+
+      // add one to rightAnswer
+      this.rightAnswer++;
+      // invoke transition
+      this.transition(this.message);
+    },
+    isWrong: function() {
+      // add a message
+      this.message = '<p><span class="Highlight--pink">oooo, sorry. that was not the right answer.</span></p>' +
+                 '<p><span class="Highlight">The correct answer is ' + this.questions[this.counter].correct_answer + '</span></p>' +
+                 '<p><span class="Highlight--dark">' + this.questions[this.counter].explanation + '</span></p>';
+      // add one to wrongAnswer
+      this.wrongAnswer++;
+      // invoke transition
+      this.transition(this.message);
+    },
+
+
+
+
+
+    transition: function() {
+      // console.log(this.$questionText);
+      game.$questionContainer.find('Question__text').removeClass('fadeInRight').addClass('fadeOutLeft');
+      this.counter++;
+      this.$messageContainer.html(this.message).addClass('show fadeInUp');
+      setTimeout(function() {
+        game.render();
+      }, 1000 * this.transitionDelay);
+
+      
     }
 
 
