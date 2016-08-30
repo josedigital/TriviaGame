@@ -21,7 +21,7 @@
   <button class="Game__sound--button Game__sound--pause" onclick="document.querySelector('.Game__sound--end').pause()">Pause</button>
   <button class="Game__sound--button Game__sound--vup" onclick="document.querySelector('.Game__sound--end').volume+=0.1">+</button>
   <button class="Game__sound--button Game__sound--vdown" onclick="document.querySelector('.Game__sound--end').volume-=0.1">-</button>
-  <audio src="assets/images/queen.mp3" class="Game__sound--end"></audio>
+  <audio src="assets/images/queen.mp3" class="Game__sound"></audio>
 </div>
 
 
@@ -39,6 +39,8 @@
     <div class="grid">
       
       <section class="eight columns ta-center Question">
+        <button class="Start__button animated fadeInDown">Start!</button>
+        <p class="Warning animated"><span class="Highlight">Oi! Sound will play when you start.</span></p>
         <div class="Question__timer hidden">Time remaining: <span class="timer">15</span></div>
         <h3 class="Question__text">
           The problem with this world is that the intelligent people are full of doubts, while the stupid ones are full of confidence.
@@ -64,7 +66,7 @@
 
 
   <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
-  <script src="assets/javascript/app.js"></script>
+  <script src="assets/javascript/app-refactored.js"></script>
 
 </body>
 </html>

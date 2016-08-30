@@ -125,7 +125,7 @@ $(function() {
     questionContainer: $('.Question'),
     questionText: $('.Question__text'),
     messageContainer: $('.Question__message'),
-    quesitonForm: $('.Question__answers form'),
+    questionForm: $('.Question__answers form'),
     radio: $('input[type="radio"]'),
     timerContainer: $('.Question__timer'),
     timer: $('.timer'),
@@ -150,7 +150,7 @@ $(function() {
       $unAnswered = 0;
 
       // empty form answers after answering
-      game.quesitonForm.empty();
+      game.questionForm.empty();
 
       // get a question
       this.getQuestion();
@@ -208,7 +208,7 @@ $(function() {
 
       // add question to DOM
       this.questionText.html(Questions[$counter].question_text);
-      this.quesitonForm
+      this.questionForm
         .append(this.radioTemplate(Questions[$counter].answer_one))
         .append(this.radioTemplate(Questions[$counter].answer_two))
         .append(this.radioTemplate(Questions[$counter].answer_three))
@@ -240,7 +240,7 @@ $(function() {
         }
 
         // empty form answers after answering
-        game.quesitonForm.empty();
+        game.questionForm.empty();
 
         // increment counter
         $counter++;
@@ -295,7 +295,7 @@ $(function() {
       $counter++;
 
       // empty form answers
-      game.quesitonForm.empty();
+      game.questionForm.empty();
 
 
     },
