@@ -25,7 +25,7 @@
       answer_three: 'Iggy Pop',
       answer_four: 'Filthy Animal',
       correct_answer: 'Sid Vicious',
-      explanation: 'The band was originally formed to fill an empty space on a bill at the first UK based "international punk rock festival". This show was organised by Malcolm McLaren at the 100 Club in London\'s Oxford Street on September 20th, 1976. The initial line up consisted of \'Bromley Contingent\' members Siouxsie Sioux (real name Susan Janet Ballion), Steven Severin (real name Steven Bailey aka Steve Spunker/Havoc), Marco Pirroni (later of Adam and the Ants and Rema Rema) and Sid Vicious (real name John Simon Ritchie), later of the Sex Pistols, on drums. On this occasion their set consisted of a lengthy and chaotic unrehearsed improvisation of "The Lord\'s Prayer", which also included lines from songs like "Knockin\' On Heaven\'s Door", "Smoke On The Water" and "Twist and Shout".'
+      explanation: 'The band was originally formed to fill an empty space on a bill at the first UK based "international punk rock festival". This show was organised by Malcolm McLaren at the 100 Club in London\'s Oxford Street on September 20th, 1976.'
     },
     4: {
       question_text: 'What do the letters stand for, in the name of punk rock band, JFA?',
@@ -56,10 +56,10 @@
     },
     7: {
       question_text: 'What member of hardcore punk band, Minor Threat went on to form Fugazi?',
-      answer_one: 'Answer One',
-      answer_two: 'Answer Two',
-      answer_three: 'Answer Three',
-      answer_four: 'Answer Four',
+      answer_one: 'Mike Watt',
+      answer_two: 'Brian Baker',
+      answer_three: 'Greg Ginn',
+      answer_four: 'Ian Mackaye',
       correct_answer: 'Ian Mackaye',
       explanation: 'While Brian Baker was also in Minor Threat, he actually went on to form Dagnasty. The Fugazi name alludes to a Vietnam-era GI slang backronym for a particularly bad combat situation.'
     },
@@ -91,8 +91,11 @@
       explanation: 'Skanking is performed in a large circle at concerts, usually rotating one way or another around an axis. These circles are called "ska pits", not unlike moshpits.'
     }
   };
-
-
+  var total =0;
+  // set total # of questions in var: $totalQuestions
+  for(var q in Questions) {
+    total++; // number of questions
+  }
 
 
 
@@ -109,13 +112,15 @@
     wrongAnswer: 0,
     unAnswered: 0,
     message: '',
-    transitionDelay: 3,
+    transitionDelay: 5,
+    totalQuestions: total,
+
 
 
     template: function(question) {
-      return '<div class="Question__timer">Time remaining: <span class="timer">15</span></div>' +
+      return '<div class="Question__timer">Time remaining: <span class="timer">' + this.allottedTime + '</span></div>' +
           '<h3 class="Question__text animated fadeInRight">' + this.questions[this.counter].question_text + '</h3>' +
-          '<div class="Question__answers">' +
+          '<div class="Question__answers animated fadeInLeft">' +
             '<form action="">' +
               '<label class="radio">' +
                 '<input type="radio" name="question_' + this.counter + '" value="' + this.questions[this.counter].answer_one + '">' +
@@ -137,8 +142,6 @@
           '</div>' +
           '<div class="Question__message animated"></div>';
     },
-    // soundWarning: '<p class="Warning animated"><span class="Highlight">Oi! Sound will play when you start.</span></p>',
-    // startButton: '<button class="Start__button animated fadeInDown">Start!</button>',
 
 
     init: function() {
@@ -163,6 +166,7 @@
     bindEvents: function() {
       this.$startButton.on('click', this.preStart.bind(this));
       this.$questionContainer.on('change', 'input[type="radio"]', this.checkQuestion);
+      this.$restartButton.on('click', this.reStart.bind(this));
     },
     render: function() {
 
@@ -171,7 +175,6 @@
         this.$questionContainer.html(this.template(this.questions[this.counter]));
       if( this.counter === 1)
         this.$questionContainer.prepend(this.$soundWarning);
-      
     },
     preStart: function() {
       this.$startButton.removeClass('fadeInDown').addClass('fadeOutUp');
@@ -179,7 +182,9 @@
       setTimeout(this.startGame.bind(this), 1000)  ;
     },
     startGame: function() {
-      this.$soundWarning.addClass('hinge');
+      if ( this.$soundWarning ) {
+        this.$soundWarning.addClass('hinge');
+      }
       document.querySelector('.Game__sound').play();
       this.counter = 1;
       this.startTimer();
@@ -189,31 +194,27 @@
       this.timerCount++;
       this.$questionContainer.find('.timer').html(this.allottedTime - this.timerCount);
       if(this.timerCount === this.allottedTime) {
-        this.unAnswered++;
+        this.isUnanswered();
+        this.stopTimer();
       }
-      console.log(this.timerCount);
     },
     startTimer: function() {
       this.timerCount = 0;
       this.startIntID = setInterval(this.timer.bind(this), 1000);
-      console.log(this.timerCount);
     },
     stopTimer: function() {
       clearInterval(this.startIntID);
     },
     checkQuestion: function() {
         game.stopTimer();
+        // check answer
         if(game.questions[game.counter].correct_answer === this.value) {
           game.isRight();
         } else {
           game.isWrong();
         }
-
-        // empty form answers after answering
-        // game.questionForm.empty();
-
         // increment counter
-        game.counter++;    
+        game.counter++;
     },
     isRight: function() {
       // add a message
@@ -236,26 +237,55 @@
       // invoke transition
       this.transition(this.message);
     },
+    isUnanswered: function() {
+      // add a message
+      this.message = '<p><span class="Highlight--pink">sorry, time\'s up.</span></p>' +
+                 '<p><span class="Highlight">The correct answer is ' + this.questions[this.counter].correct_answer + '</span></p>' +
+                 '<p><span class="Highlight--dark">' + this.questions[this.counter].explanation + '</span></p>';
+      // add one to wrongAnswer
+      this.unAnswered++;
+      // need to increment counter if unanswered
+      this.counter++;
+      // invoke transition
+      this.transition(this.message);
+    },
+    isLastQuestion: function() {
+      if( this.counter > this.totalQuestions ) {
+        this.gameOver();
+        return true;
 
-
-
+      }
+    },
 
 
     transition: function(message) {
       this.$questionContainer.find('.Question__message').html(message);
       this.$questionContainer.find('.Question__message').addClass('shoe fadeInUp');
       this.$questionContainer.find('.Question__text').removeClass('fadeInRight').addClass('fadeOutLeft');
-      this.$questionContainer.find('.Question__answers').removeClass('fadeInLeft').addClass('animated fadeOutRight');
-      this.counter++;
+      this.$questionContainer.find('.Question__answers').removeClass('fadeInLeft').addClass('fadeOutRight');
       this.$messageContainer.html(this.message).addClass('show fadeInUp');
       setTimeout(function() {
+        if( game.isLastQuestion() ) return;
         game.startTimer();
         game.render();
       }, 1000 * this.transitionDelay);
+    },
 
-      
+    gameOver: function() {
+      this.$questionContainer.find('.Question__message').append('<div class="Game__stats"><h3 class="animated fadeInDown"><span class="Highlight--pink">game over</span></h3>' +
+'<p class="animated fadeInUp"><span class="Highlight">you got ' + this.rightAnswer + ' answers correct.</span><br>' +
+'<span class="Highlight">you got ' + this.wrongAnswer + ' answers incorrect.</span><br>' +
+'<span class="Highlight">you left ' + this.unAnswered + ' answers blank.</span></p></div>');
+      this.$restartButton.removeClass('hidden').addClass('animated fadeInUp');
+      return;
+    },
+
+    reStart: function() {
+      this.rightAnswer = 0,
+      this.wrongAnswer = 0,
+      this.unAnswered = 0,
+      this.startGame();
     }
-
 
   }
 
