@@ -112,7 +112,7 @@
     wrongAnswer: 0,
     unAnswered: 0,
     message: '',
-    transitionDelay: 5,
+    transitionDelay: 10,
     totalQuestions: total,
 
 
@@ -276,11 +276,12 @@
 '<p class="animated fadeInUp"><span class="Highlight">you got ' + this.rightAnswer + ' answers correct.</span><br>' +
 '<span class="Highlight">you got ' + this.wrongAnswer + ' answers incorrect.</span><br>' +
 '<span class="Highlight">you left ' + this.unAnswered + ' answers blank.</span></p></div>');
-      this.$restartButton.removeClass('hidden').addClass('animated fadeInUp');
+      this.$restartButton.removeClass('hidden').addClass('fadeInUp');
       return;
     },
 
     reStart: function() {
+      this.$restartButton.addClass('hidden').removeClass('fadeInUp');
       this.rightAnswer = 0,
       this.wrongAnswer = 0,
       this.unAnswered = 0,
