@@ -185,10 +185,16 @@
       if ( this.$soundWarning ) {
         this.$soundWarning.addClass('hinge');
       }
-      document.querySelector('.Game__sound').play();
+      this.soundControls();
+      // display sound controls
+      $('.Game__sound--button').addClass('animated fadeInUp');
       this.counter = 1;
       this.startTimer();
       this.render();
+    },
+    soundControls: function() {
+      document.querySelector('.Game__sound').play();
+      // document.querySelector('.Game__sound--pause')
     },
     timer: function() {
       this.timerCount++;
@@ -273,9 +279,9 @@
 
     gameOver: function() {
       this.$questionContainer.find('.Question__message').append('<div class="Game__stats"><h3 class="animated fadeInDown"><span class="Highlight--pink">game over</span></h3>' +
-'<p class="animated fadeInUp"><span class="Highlight">you got ' + this.rightAnswer + ' answers correct.</span><br>' +
-'<span class="Highlight">you got ' + this.wrongAnswer + ' answers incorrect.</span><br>' +
-'<span class="Highlight">you left ' + this.unAnswered + ' answers blank.</span></p></div>');
+                                                                '<p class="animated fadeInUp"><span class="Highlight">you got ' + this.rightAnswer + ' answers correct.</span><br>' +
+                                                                '<span class="Highlight">you got ' + this.wrongAnswer + ' answers incorrect.</span><br>' +
+                                                                '<span class="Highlight">you left ' + this.unAnswered + ' answers blank.</span></p></div>');
       this.$restartButton.removeClass('hidden').addClass('fadeInUp');
       return;
     },

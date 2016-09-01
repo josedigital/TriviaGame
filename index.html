@@ -17,10 +17,10 @@
 <body>
 
 <div class="Game__sound--controls grid animated">
-  <button class="Game__sound--button Game__sound--play" onclick="document.querySelector('.Game__sound--end').play()">Play</button>
-  <button class="Game__sound--button Game__sound--pause" onclick="document.querySelector('.Game__sound--end').pause()">Pause</button>
-  <button class="Game__sound--button Game__sound--vup" onclick="document.querySelector('.Game__sound--end').volume+=0.1">+</button>
-  <button class="Game__sound--button Game__sound--vdown" onclick="document.querySelector('.Game__sound--end').volume-=0.1">-</button>
+  <button class="Game__sound--button Game__sound--play" onclick="document.querySelector('.Game__sound').play()">Play</button>
+  <button class="Game__sound--button Game__sound--pause" onclick="document.querySelector('.Game__sound').pause()">Pause</button>
+  <button class="Game__sound--button Game__sound--vup" onclick="document.querySelector('.Game__sound').volume+=0.1">Vol +</button>
+  <button class="Game__sound--button Game__sound--vdown" onclick="document.querySelector('.Game__sound').volume-=0.1">Vol -</button>
   <audio src="assets/images/queen.mp3" class="Game__sound"></audio>
 </div>
 
